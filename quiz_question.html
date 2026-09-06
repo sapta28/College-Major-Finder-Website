@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Kuis Rekomendasi Jurusan PENS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fff3ed;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            margin: 20px;
+        }
+
+        .card {
+            background-color: white;
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            width: 100%;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            height: 6px;
+            background-color: #f1f1f1;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .progress-bar {
+            height: 6px;
+            background-color: #f57c00;
+            border-radius: 10px;
+            transition: width 0.3s ease;
+        }
+
+        .question-number {
+            color: #22c55e;
+            font-weight: bold;
+            font-size: 22px;
+            margin: 0;
+        }
+
+        .question-text {
+            font-weight: bold;
+            font-size: 18px;
+            margin: 10px 0 20px 0;
+        }
+
+        .options label {
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 8px;
+            transition: background-color 0.2s;
+        }
+
+        .options label:hover {
+            background-color: #f8f8f8;
+        }
+
+        .options input[type="checkbox"] {
+            margin-right: 12px;
+            width: 18px;
+            height: 18px;
+        }
+
+        .buttons {
+            margin-top: 30px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .buttons button {
+            background-color: #f57c00;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transition: background-color 0.2s;
+        }
+
+        .buttons button:hover {
+            background-color: #e65100;
+        }
+
+        .buttons button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .buttons button.submit-btn {
+            background-color: #22c55e;
+        }
+
+        .buttons button.submit-btn:hover {
+            background-color: #16a34a;
+        }
+
+        .hidden {
+            display: none;
+        }
+        
+        /* Result styles */
+        .main-result {
+            background: white;
+            padding: 1.5rem 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        
+        .main-result .text {
+            flex: 1;
+        }
+        
+        .main-result .percentage {
+            font-size: 48px;
+            font-weight: 800;
+            color: #f97316;
+        }
+        
+        .main-result h2 {
+            margin: 0;
+        }
+        
+        .main-result p {
+            margin-top: 0.5rem;
+            color: #555;
+            font-size: 14px;
+        }
+        
+        .main-result .icon {
+            font-size: 48px;
+            color: #22c55e;
+        }
+
+        .sections {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .section {
+            flex: 1;
+            margin: 0.5rem;
+            min-width: 250px;
+        }
+
+        .section h3 {
+            font-size: 18px;
+            margin-bottom: 1rem;
+        }
+
+        .careers, .relevant-majors {
+            background: white;
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        }
+
+        .careers button {
+            display: block;
+            width: 100%;
+            margin-bottom: 0.75rem;
+            padding: 0.75rem;
+            background: #f1f5f9;
+            border: none;
+            border-radius: 9999px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: left;
+        }
+
+        .relevant-majors div {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+            font-size: 16px;
+            padding: 8px 0;
+            border-bottom: 1px solid #f1f1f1;
+        }
+
+        .relevant-majors div:last-child {
+            border-bottom: none;
+        }
+
+        .relevant-majors div span:last-child {
+            font-weight: bold;
+            color: #f97316;
+        }
+
+        .button-container {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            background-color: #f97316;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 20px; /* jarak antar tombol */
+            margin-top: 30px;
+        }
+
+        .btn.orange {
+            background-color: #ff6a00;
+            color: #fff;
+            font-weight: bold;
+            padding: 10px 20px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            transition: 0.3s;
+        }
+
+        .btn.orange:hover {
+            background-color: #e55c00;
+        }
+
+        
+        @media (max-width: 768px) {
+            .sections {
+                flex-direction: column;
+            }
+            .section {
+                margin: 0.5rem 0;
+            }
+            .main-result {
+                flex-direction: column;
+                text-align: center;
+            }
+            .main-result .icon {
+                margin-top: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Quiz section -->
+        <div id="quiz-section">
+            <div class="card">
+                <div class="progress-bar-container">
+                    <div class="progress-bar" id="progress-bar"></div>
+                </div>
+                
+                <!-- Pertanyaan 1 -->
+                <div class="question step step-1">
+                    <p class="question-number">Pertanyaan 1/10</p>
+                    <p class="question-text">Manakah aktivitas berikut yang paling kamu minati?</p>
+                    <div class="options">
+                        <label><input type="checkbox" name="q1" value="TI"> Memecahkan masalah dengan menggunakan algoritma dan pemrograman</label>
+                        <label><input type="checkbox" name="q1" value="TK"> Merakit atau memperbaiki perangkat elektronik</label>
+                        <label><input type="checkbox" name="q1" value="TE"> Bekerja dengan rangkaian listrik dan perangkat elektronik</label>
+                        <label><input type="checkbox" name="q1" value="TMB"> Membuat konten multimedia atau desain visual</label>
+                        <label><input type="checkbox" name="q1" value="TG"> Menciptakan dan bermain game</label>
+                    </div>
+                </div>
+
+                <!-- Pertanyaan 2 -->
+                <div class="question step step-2 hidden">
+                    <p class="question-number">Pertanyaan 2/10</p>
+                    <p class="question-text">Saat melihat alat elektronik rusak, apa yang pertama kali kamu pikirkan?</p>
+                    <div class="options">
+                        <label><input type="checkbox" name="q2" value="TK"> Bagaimana cara memperbaiki perangkat kerasnya?</label>
+                        <label><input type="checkbox" name="q2" value="TE"> Apa komponen listrik yang rusak dan bagaimana sistem kerjanya?</label>
+                        <label><input type="checkbox" name="q2" value="TI"> Bagaimana cara memperbaiki software atau bagian logisnya?</label>
+                        <label><input type="checkbox" name="q2" value="TM"> Bagaimana cara mengotomatisasi alat tersebut agar lebih efisien?</label>
+                        <label><input type="checkbox" name="q2" value="TPE"> Bagaimana energi yang digunakan dan efisiensinya?</label>
+                    </div>
+                </div>
+
+                <!-- Pertanyaan 3 -->
+                <div class="question step step-3 hidden">
+                    <p class="question-number">Pertanyaan 3/10</p>
+                    <p class="question-text">Jika kamu memiliki kesempatan untuk mengerjakan proyek, apa yang akan kamu pilih?</p>
+                    <div class="options">
+                        <label><input type="checkbox" name="q3" value="TI"> Mengembangkan aplikasi atau website</label>
+                        <label><input type="checkbox" name="q3" value="TRI"> Membangun sistem koneksi internet yang canggih</label>
+                        <label><input type="checkbox" name="q3" value="TG"> Membuat game dengan grafis dan gameplay menarik</label>
+                        <label><input type="checkbox" name="q3" value="SDT"> Menganalisis data untuk mendapatkan informasi berharga</label>
+                        <label><input type="checkbox" name="q3" value="TTK"> Membangun infrastruktur komunikasi nirkabel</label>
+                    </div>
+                </div>
+
+                <!-- Pertanyaan 4 -->
+                <div class="question step step-4 hidden">
+                    <p class="question-number">Pertanyaan 4/10</p>
+                    <p class="question-text">Apa yang membuat kamu tertarik pada teknologi?</p>
+                    <div class="options">
+                        <label><input type="checkbox" name="q4" value="SDT"> Kemampuan untuk mengolah dan memahami data dalam jumlah besar</label>
+                        <label><input type="checkbox" name="q4" value="TI"> Menciptakan solusi dengan coding dan pemrograman</label>
+                        <label><input type="checkbox" name="q4" value="TMB"> Mengekspresikan kreativitas melalui media digital</label>
+                        <label><input type="checkbox" name="q4" value="TPE"> Mengembangkan sistem energi yang efisien dan berkelanjutan</label>
+                        <label><input type="checkbox" name="q4" value="TEI"> Menghubungkan teknologi dengan sistem industri</label>
+                    </div>
+                </div>
+
+                <!-- Pertanyaan 5 -->
+                <div class="question step step-5 hidden">
+                    <p class="question-number">Pertanyaan 5/10</p>
+                    <p class="question-text">Mata pelajaran apa yang paling kamu sukai di sekolah?</p>
+                    <div class="options">
+                        <label><input type="checkbox" name="q5" value="TI"> Matematika dan Algoritma</label>
+                        <label><input type="checkbox" name="q5" value="TE"> Fisika dan terutama materi Listrik</label>
+                        <label><input type="checkbox" name="q5" value="TMB"> Seni dan Desain</label>
+                        <label><input type="checkbox" name="q5" value="SDT"> Statistika dan Analisis Data</label>
+                        <label><input type="checkbox" name="q5" value="TM"> Fisika dan Mekanika</label>
+                    </div>
+                </div>
+                
+                <!-- Pertanyaan 6 -->
+                <div class="question step step-6 hidden">
+                    <p class="question-number">Pertanyaan 6/10</p>
+                    <p class="question-text">Apa kemampuan yang ingin kamu kuasai?</p>
+                    <div class="options">
+                        <label><input type="checkbox" name="q6" value="TI"> Pengembangan perangkat lunak dan algoritma</label>
+                        <label><input type="checkbox" name="q6" value="TK"> Perancangan dan pengembangan perangkat keras komputer</label>
+                        <label><input type="checkbox" name="q6" value="TTK"> Membangun jaringan telekomunikasi yang efisien</label>
+                        <label><input type="checkbox" name="q6" value="TG"> Desain dan pengembangan game</label>
+                        <label><input type="checkbox" name="q6" value="TPE"> Mengelola dan mengoptimalkan sistem pembangkit energi</label>
+                    </div>
+                </div>
+                
+                <!-- Pertanyaan 7 -->
+                <div class="question step step-7 hidden">
+                    <p class="question-number">Pertanyaan 7/10</p>
+                    <p class="question-text">Bagaimana kamu melihat peranmu dalam perkembangan teknologi masa depan?</p>
+                    <div class="options">
+                        <label><input type="checkbox" name="q7" value="TRI"> Membangun infrastruktur internet yang lebih cepat dan aman</label>
+                        <label><input type="checkbox" name="q7" value="TPE"> Mengembangkan solusi energi berkelanjutan</label>
+                        <label><input type="checkbox" name="q7" value="SDT"> Memanfaatkan big data untuk menyelesaikan masalah kompleks</label>
+                        <label><input type="checkbox" name="q7" value="TEI"> Mengotomatisasi sistem industri dengan teknologi canggih</label>
+                        <label><input type="checkbox" name="q7" value="TM"> Menciptakan robot dan sistem otomasi pintar</label>
+                    </div>
+                </div>
+                
+                <!-- Pertanyaan 8 -->
+                <div class="question step step-8 hidden">
+                    <p class="question-number">Pertanyaan 8/10</p>
+                    <p class="question-text">Bidang teknologi apa yang menurut kamu memiliki dampak terbesar di masa depan?</p>
+                    <div class="options">
+                        <label><input type="checkbox" name="q8" value="TI"> Kecerdasan buatan dan machine learning</label>
+                        <label><input type="checkbox" name="q8" value="TTK"> Teknologi komunikasi 5G dan beyond</label>
+                        <label><input type="checkbox" name="q8" value="TPE"> Energi terbarukan dan teknologi ramah lingkungan</label>
+                        <label><input type="checkbox" name="q8" value="TG"> Virtual reality dan augmented reality</label>
+                        <label><input type="checkbox" name="q8" value="TM"> Robotika dan sistem otomasi</label>
+                    </div>
+                </div>
+                
+                <!-- Pertanyaan 9 -->
+                <div class="question step step-9 hidden">
+                    <p class="question-number">Pertanyaan 9/10</p>
+                    <p class="question-text">Dalam tim proyek, peran apa yang biasanya kamu ambil?</p>
+                    <div class="options">
+                        <label><input type="checkbox" name="q9" value="TI"> Pengembang/programmer yang menulis kode</label>
+                        <label><input type="checkbox" name="q9" value="SDT"> Analis yang mengolah dan menginterpretasi data</label>
+                        <label><input type="checkbox" name="q9" value="TMB"> Desainer UI/UX atau pembuat konten multimedia</label>
+                        <label><input type="checkbox" name="q9" value="TK"> Engineer yang bekerja dengan komponen hardware</label>
+                        <label><input type="checkbox" name="q9" value="TEI"> Integrator sistem yang menghubungkan berbagai komponen</label>
+                    </div>
+                </div>
+                
+                <!-- Pertanyaan 10 -->
+                <div class="question step step-10 hidden">
+                    <p class="question-number">Pertanyaan 10/10</p>
+                    <p class="question-text">Apa tantangan teknologi yang ingin kamu selesaikan?</p>
+                    <div class="options">
+                        <label><input type="checkbox" name="q10" value="TPE"> Krisis energi dan kebutuhan sumber daya berkelanjutan</label>
+                        <label><input type="checkbox" name="q10" value="TRI"> Akses internet yang merata untuk semua orang</label>
+                        <label><input type="checkbox" name="q10" value="SDT"> Pemanfaatan data untuk pengambilan keputusan yang lebih baik</label>
+                        <label><input type="checkbox" name="q10" value="TTK"> Komunikasi yang lebih cepat dan efisien</label>
+                        <label><input type="checkbox" name="q10" value="TI"> Keamanan digital dan privasi data</label>
+                    </div>
+                </div>
+
+                <!-- Tombol Navigasi -->
+                <div class="buttons">
+                    <button type="button" id="prev-btn" onclick="prevStep()" disabled>Sebelumnya</button>
+                    <button type="button" id="next-btn" onclick="nextStep()">Selanjutnya</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Result section (initially hidden) -->
+        <div id="result-section" class="hidden">
+            <div class="main-result">
+                <div class="text">
+                    <div class="percentage" id="result-percentage">90%</div>
+                    <h2 id="result-major">Teknik Informatika</h2>
+                    <p id="result-description">Teknik Informatika adalah jurusan yang mempelajari dasar-dasar ilmu komputer, pemrograman, dan pengembangan perangkat lunak.</p>
+                </div>
+                <div class="icon">✅</div>
+            </div>
+
+            <div class="sections">
+                <div class="section">
+                    <h3>🏆 Prospek karir :</h3>
+                    <div class="careers" id="careers-list">
+                        <!-- Career buttons will be inserted here -->
+                    </div>
+                </div>
+                <div class="section">
+                    <h3>🎯 Jurusan lain yang relevan :</h3>
+                    <div class="relevant-majors" id="relevant-majors-list">
+                        <!-- Related majors will be inserted here -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button onclick="restartQuiz()" class="btn orange">Mulai ulang kuis!</button>
+                <a href="dasboard.html" class="btn orange">Beranda</a>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // Quiz navigation
+        let currentStep = 1;
+        const totalSteps = document.querySelectorAll('.step').length;
+        
+        // Track answers
+        const answers = {
+            TI: 0,  // Teknik Informatika
+            TK: 0,  // Teknik Komputer
+            TE: 0,  // Teknik Elektro
+            TMB: 0, // Teknologi Multimedia Broadcasting
+            TTK: 0, // Teknik Telekomunikasi
+            TEI: 0, // Teknik Elektro Industri
+            TM: 0,  // Teknik Mekatronika
+            TPE: 0, // Teknik Pembangkitan Energi
+            TG: 0,  // Teknologi Game
+            TRI: 0, // Teknologi Rekayasa Internet
+            SDT: 0  // Sains Data Terapan
+        };
+        
+        // Major information
+        const majors = {
+            TI: {
+                name: "Teknik Informatika",
+                description: "Teknik Informatika adalah jurusan yang mempelajari tentang pengembangan perangkat lunak, pemrograman, basis data, kecerdasan buatan, dan komputasi.",
+                careers: ["Software Developer", "Web Developer", "Mobile App Developer", "Data Engineer", "AI Engineer"]
+            },
+            TK: {
+                name: "Teknik Komputer",
+                description: "Teknik Komputer berfokus pada perancangan dan pengembangan sistem komputer, termasuk perangkat keras, arsitektur komputer, dan sistem tertanam.",
+                careers: ["Hardware Engineer", "Embedded Systems Engineer", "Computer Architecture Designer", "IoT Developer", "System Administrator"]
+            },
+            TE: {
+                name: "Teknik Elektro",
+                description: "Teknik Elektro mempelajari penerapan listrik, elektronika, dan elektromagnetisme untuk mendesain berbagai perangkat dan sistem listrik.",
+                careers: ["Electrical Engineer", "Electronics Engineer", "Power Systems Engineer", "Control Systems Engineer", "Telecommunications Engineer"]
+            },
+            TMB: {
+                name: "Teknologi Multimedia Broadcasting",
+                description: "Teknologi Multimedia Broadcasting mempelajari produksi, pengeditan, dan penyiaran konten multimedia termasuk audio, video, dan animasi.",
+                careers: ["Multimedia Producer", "Broadcast Engineer", "Video Editor", "Audio Engineer", "Content Creator"]
+            },
+            TTK: {
+                name: "Teknik Telekomunikasi",
+                description: "Teknik Telekomunikasi berfokus pada sistem dan teknologi yang memungkinkan komunikasi jarak jauh melalui berbagai media transmisi.",
+                careers: ["Telecommunications Engineer", "Network Engineer", "RF Engineer", "Wireless Communications Specialist", "Communications Infrastructure Designer"]
+            },
+            TEI: {
+                name: "Teknik Elektro Industri",
+                description: "Teknik Elektro Industri mempelajari penerapan teknologi elektro dalam lingkungan industri, termasuk otomasi, kontrol, dan sistem daya.",
+                careers: ["Industrial Automation Engineer", "Control Systems Engineer", "SCADA Specialist", "PLC Programmer", "Manufacturing Systems Engineer"]
+            },
+            TM: {
+                name: "Teknik Mekatronika",
+                description: "Teknik Mekatronika mengkombinasikan ilmu mekanik, elektronik, komputer, dan kontrol untuk menciptakan sistem otomasi canggih dan robotika.",
+                careers: ["Mechatronics Engineer", "Robotics Engineer", "Automation Engineer", "Control Systems Developer", "Smart Systems Designer"]
+            },
+            TPE: {
+                name: "Teknik Pembangkitan Energi",
+                description: "Teknik Pembangkitan Energi berfokus pada pengembangan, pengelolaan, dan optimalisasi sistem pembangkit energi konvensional maupun terbarukan.",
+                careers: ["Power Generation Engineer", "Renewable Energy Specialist", "Energy Systems Analyst", "Power Plant Designer", "Energy Efficiency Consultant"]
+            },
+            TG: {
+                name: "Teknologi Game",
+                description: "Teknologi Game mengkhususkan diri pada pengembangan game, termasuk pemrograman, desain, animasi, dan audio untuk berbagai platform gaming.",
+                careers: ["Game Developer", "Game Designer", "Game Programmer", "Graphics Developer", "Game QA Specialist"]
+            },
+            TRI: {
+                name: "Teknologi Rekayasa Internet",
+                description: "Teknologi Rekayasa Internet mempelajari infrastruktur, protokol, keamanan, dan aplikasi yang mendukung internet dan jaringan komputer.",
+                careers: ["Network Architect", "Cloud Engineer", "DevOps Engineer", "Internet Security Specialist", "Infrastructure Developer"]
+            },
+            SDT: {
+                name: "Sains Data Terapan",
+                description: "Sains Data Terapan berfokus pada pengumpulan, pengolahan, analisis, dan interpretasi data untuk mendukung pengambilan keputusan.",
+                careers: ["Data Scientist", "Data Analyst", "Machine Learning Engineer", "Business Intelligence Developer", "Big Data Specialist"]
+            }
+        };
+
+        function updateProgressBar() {
+            const progressPercentage = (currentStep / totalSteps) * 100;
+            document.getElementById('progress-bar').style.width = `${progressPercentage}%`;
+        }
+
+        function showStep(step) {
+            document.querySelectorAll('.step').forEach((el, index) => {
+                el.classList.toggle('hidden', index !== step - 1);
+            });
+            
+            // Update progress bar
+            updateProgressBar();
+            
+            // Update button states
+            document.getElementById('prev-btn').disabled = (step === 1);
+            
+            if (step === totalSteps) {
+                document.getElementById('next-btn').textContent = 'Lihat Hasil';
+                document.getElementById('next-btn').classList.add('submit-btn');
+            } else {
+                document.getElementById('next-btn').textContent = 'Selanjutnya';
+                document.getElementById('next-btn').classList.remove('submit-btn');
+            }
+        }
+
+        function nextStep() {
+            // Check if any checkbox is selected
+            const currentQuestion = document.querySelector(`.step-${currentStep}`);
+            const checkboxes = currentQuestion.querySelectorAll('input[type="checkbox"]:checked');
+            
+            if (checkboxes.length === 0) {
+                alert('Pilih minimal satu jawaban sebelum melanjutkan!');
+                return;
+            }
+            
+            // Record answers
+            checkboxes.forEach(checkbox => {
+                answers[checkbox.value]++;
+            });
+            
+            if (currentStep < totalSteps) {
+                currentStep++;
+                showStep(currentStep);
+            } else {
+                // Calculate and show results
+                showResults();
+            }
+        }
+
+        function prevStep() {
+            if (currentStep > 1) {
+                // Reset answers for the current step
+                const currentQuestion = document.querySelector(`.step-${currentStep}`);
+                const checkboxes = currentQuestion.querySelectorAll('input[type="checkbox"]:checked');
+                
+                checkboxes.forEach(checkbox => {
+                    answers[checkbox.value]--;
+                    checkbox.checked = false;
+                });
+                
+                currentStep--;
+                showStep(currentStep);
+            }
+        }
+        
+        function showResults() {
+            // Calculate scores
+            const totalPoints = Object.values(answers).reduce((a, b) => a + b, 0);
+            const scores = {};
+            
+            for (const major in answers) {
+                scores[major] = (answers[major] / totalPoints) * 100;
+            }
+            
+            // Sort majors by score (descending)
+            const sortedMajors = Object.keys(scores).sort((a, b) => scores[b] - scores[a]);
+            const topMajor = sortedMajors[0];
+            
+            // Fill in results
+            document.getElementById('result-percentage').textContent = `${Math.round(scores[topMajor])}%`;
+            document.getElementById('result-major').textContent = majors[topMajor].name;
+            document.getElementById('result-description').textContent = majors[topMajor].description;
+            
+            // Fill careers
+            const careersContainer = document.getElementById('careers-list');
+            careersContainer.innerHTML = '';
+            majors[topMajor].careers.forEach(career => {
+                const button = document.createElement('button');
+                button.textContent = career;
+                careersContainer.appendChild(button);
+            });
+            
+            // Fill relevant majors
+            const relevantMajorsContainer = document.getElementById('relevant-majors-list');
+            relevantMajorsContainer.innerHTML = '';
+            
+            // Add all other majors except the top one
+            sortedMajors.slice(1).forEach(major => {
+                const div = document.createElement('div');
+                const nameSpan = document.createElement('span');
+                nameSpan.textContent = majors[major].name;
+                
+                const scoreSpan = document.createElement('span');
+                scoreSpan.textContent = `${Math.round(scores[major])}%`;
+                
+                div.appendChild(nameSpan);
+                div.appendChild(scoreSpan);
+                relevantMajorsContainer.appendChild(div);
+            });
+            
+            // Hide quiz section and show results
+            document.getElementById('quiz-section').classList.add('hidden');
+            document.getElementById('result-section').classList.remove('hidden');
+        }
+        
+        function restartQuiz() {
+            // Reset all answers
+            for (const major in answers) {
+                answers[major] = 0;
+            }
+            
+            // Reset all checkboxes
+            document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+                checkbox.checked = false;
+            });
+            
+            // Reset to first step
+            currentStep = 1;
+            showStep(currentStep);
+            
+            // Show quiz section and hide results
+            document.getElementById('quiz-section').classList.remove('hidden');
+            document.getElementById('result-section').classList.add('hidden');
+        }
+
+        // Initialize the quiz
+        showStep(currentStep);
+        
+        // Only allow one checkbox to be selected per question
+        document.querySelectorAll('.options').forEach(optionsGroup => {
+            optionsGroup.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    if (this.checked) {
+                        // Uncheck all other checkboxes in this group
+                        optionsGroup.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+                            if (cb !== this) cb.checked = false;
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

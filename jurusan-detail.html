@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail Jurusan</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: rgb(222, 222, 222);
+            font-family: Arial, sans-serif;
+        }
+
+        .header {
+            background-color: #ff5722;
+            color: white; 
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .container-fluid {
+            padding: 20px;
+        }
+
+        .sidebar {
+            padding-right: 15px;
+            background-color: white;
+            border-radius: 5px;
+        }
+
+        .list-group-item {
+            border-radius: 10px !important;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            border: none;
+            background-color: #e9ecef;
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            transition: all 0.3s ease;
+        }
+
+        .list-group-item:hover {
+            background-color: #ff5722;
+            color: white;
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(255, 87, 34, 0.3);
+        }
+        
+        .list-group-item i {
+            margin-right: 15px;
+            font-size: 1.2em;
+        }
+
+        .detail-card {
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+        }
+
+        .major-title {
+            font-size: 2.2em;
+            font-weight: bold;
+            color: #ff5722;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #ff5722;
+            padding-bottom: 10px;
+        }
+
+        .major-section h5 {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #333;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .major-section p, .major-section ul {
+            font-size: 1.1em;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .major-section ul {
+            list-style: none; /* Remove default list bullets */
+            padding-left: 0;
+        }
+
+        .major-section ul li {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            padding: 10px 15px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .major-section ul li::before {
+            content: "\f058"; /* FontAwesome check-circle icon */
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            color: #28a745; /* Green checkmark */
+            margin-right: 10px;
+        }
+
+        .back-button {
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        .back-button:hover {
+            background-color: #5a6268;
+            color: white;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+    <div class="header">
+        <div class="logo">
+            <a href="index.html">
+                <img src="images/Logo.png" alt="Logo">
+            </a>
+            <h3 class="mb-0">Temu Jurusan</h3>
+        </div>
+        <i class="fas fa-moon" style="float: right;"></i>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2 sidebar">
+                <div class="list-group">
+                    <a href="dasboard.html" class="list-group-item list-group-item-action">
+                        <i class="fas fa-th-large"></i>
+                        Dashboard
+                    </a>
+                    <a href="infoJurusan.html" class="list-group-item list-group-item-action active" aria-current="true" style="background-color: #ff5722; color: white;">
+                        <i class="fas fa-book"></i>
+                        Jurusan
+                    </a>
+                    <a href="recent.html" class="list-group-item list-group-item-action">
+                        <i class="fas fa-history"></i>
+                        Berita Terbaru
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-10">
+                <div class="detail-card">
+                    <h1 class="major-title" id="majorTitle"></h1>
+
+                    <div class="major-section">
+                        <h5>Deskripsi</h5>
+                        <p id="majorDescription"></p>
+                    </div>
+
+                    <div class="major-section">
+                        <h5>Prospek Karier</h5>
+                        <ul id="majorCareers"></ul>
+                    </div>
+
+                    <div class="major-section">
+                        <h5>Mata Kuliah Inti</h5>
+                        <ul id="majorCoreSubjects"></ul>
+                    </div>
+
+                    <div class="major-section">
+                        <h5>Kemampuan yang Dibutuhkan</h5>
+                        <ul id="majorRequiredSkills"></ul>
+                    </div>
+
+                    <div class="major-section">
+                        <h5>Lama Studi</h5>
+                        <p id="majorStudyDuration"></p>
+                    </div>
+
+                    <a href="infoJurusan.html" class="back-button">Kembali ke Daftar Jurusan</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Data for each major (Expanded from previous versions)
+            const majorsData = {
+                "Teknik_Informatika": {
+                    title: "Teknik Informatika",
+                    description: "Teknik Informatika adalah jurusan yang mendalami pengembangan perangkat lunak, algoritma, kecerdasan buatan, pemrograman, dan sistem informasi. Lulusannya sangat dicari di era digital yang terus berkembang.",
+                    careers: [
+                        "Software Developer", "Web Developer", "Mobile App Developer",
+                        "Data Scientist", "System Analyst", "AI/Machine Learning Engineer",
+                        "Cybersecurity Specialist", "Game Programmer"
+                    ],
+                    core_subjects: [
+                        "Algoritma dan Struktur Data", "Pemrograman (Python, Java, C++)",
+                        "Basis Data", "Jaringan Komputer", "Sistem Operasi",
+                        "Kecerdasan Buatan", "Rekayasa Perangkat Lunak", "Pengembangan Web"
+                    ],
+                    required_skills: [
+                        "Logika dan Pemecahan Masalah", "Kemampuan Analitis",
+                        "Kreativitas", "Kemampuan Belajar Mandiri", "Detail-Oriented",
+                        "Matematika Dasar", "Komunikasi Efektif"
+                    ],
+                    study_duration: "4 Tahun (D4/S1)"
+                },
+                "Teknik_Komputer": {
+                    title: "Teknik Komputer",
+                    description: "Teknik Komputer berfokus pada perancangan dan pengembangan sistem komputer, mulai dari perangkat keras (hardware) hingga arsitektur sistem, jaringan, dan sistem tertanam (embedded systems).",
+                    careers: [
+                        "Hardware Engineer", "Embedded Systems Engineer", "IoT Developer",
+                        "Network Engineer", "System Architect", "Microprocessor Engineer",
+                        "IT Consultant (Hardware/Networking)"
+                    ],
+                    core_subjects: [
+                        "Arsitektur Komputer", "Sistem Operasi", "Jaringan Komputer",
+                        "Elektronika Digital", "Mikroprosesor dan Mikrokontroler",
+                        "Sistem Tertanam", "Desain VLSI", "Pemrograman Hardware"
+                    ],
+                    required_skills: [
+                        "Pemahaman Hardware", "Logika Kuat", "Problem Solving",
+                        "Detail-Oriented", "Keterampilan Merakit", "Pemahaman Sistem"
+                    ],
+                    study_duration: "4 Tahun (D4/S1)"
+                },
+                "Teknik_Elektro": {
+                    title: "Teknik Elektro",
+                    description: "Teknik Elektro mempelajari penerapan listrik, elektronika, dan elektromagnetisme untuk mendesain berbagai perangkat dan sistem listrik, mulai dari pembangkit listrik hingga perangkat telekomunikasi dan kontrol.",
+                    careers: [
+                        "Electrical Engineer", "Electronics Engineer", "Power Systems Engineer",
+                        "Control Systems Engineer", "Telecommunications Engineer",
+                        "Instrumentation Engineer", "Renewable Energy Engineer"
+                    ],
+                    core_subjects: [
+                        "Rangkaian Listrik", "Elektronika Dasar", "Sistem Kontrol",
+                        "Mesin Listrik", "Telekomunikasi", "Sinyal dan Sistem",
+                        "Dasar Mekatronika", "Distribusi Tenaga Listrik"
+                    ],
+                    required_skills: [
+                        "Matematika dan Fisika Kuat", "Kemampuan Analitis",
+                        "Pemecahan Masalah", "Keterampilan Desain Sirkuit",
+                        "Ketelitian", "Inovasi"
+                    ],
+                    study_duration: "4 Tahun (D4/S1)"
+                },
+                "Teknologi_Multimedia_Broadcasting": {
+                    title: "Teknologi Multimedia Broadcasting",
+                    description: "Jurusan ini fokus pada produksi, pengeditan, dan penyiaran konten multimedia yang melibatkan audio, video, grafis, dan animasi. Cocok bagi individu kreatif yang tertarik pada industri media dan hiburan digital.",
+                    careers: [
+                        "Multimedia Producer", "Video Editor", "Motion Graphics Designer",
+                        "Broadcast Engineer", "Content Creator", "Animator",
+                        "UI/UX Designer (Media)", "Sound Engineer"
+                    ],
+                    core_subjects: [
+                        "Dasar Desain Grafis", "Animasi Digital", "Produksi Video",
+                        "Audio Engineering", "Teknik Broadcasting", "Web Multimedia",
+                        "Desain Interaktif", "Cerita Visual"
+                    ],
+                    required_skills: [
+                        "Kreativitas", "Imajinasi Visual", "Keterampilan Editing Software",
+                        "Kemampuan Bercerita", "Inovatif", "Kerja Tim"
+                    ],
+                    study_duration: "4 Tahun (D4/S1)"
+                },
+                "Teknik_Telekomunikasi": {
+                    title: "Teknik Telekomunikasi",
+                    description: "Teknik Telekomunikasi mempelajari sistem dan teknologi yang memungkinkan komunikasi jarak jauh, baik melalui jaringan kabel maupun nirkabel, termasuk seluler, serat optik, dan satelit.",
+                    careers: [
+                        "Telecommunications Engineer", "Network Engineer", "RF Engineer",
+                        "Wireless Communications Specialist", "Fiber Optic Engineer",
+                        "Data Communications Analyst", "Broadband Network Designer"
+                    ],
+                    core_subjects: [
+                        "Sistem Komunikasi", "Jaringan Nirkabel", "Antena dan Propagasi",
+                        "Pemrosesan Sinyal Digital", "Jaringan Seluler (4G/5G)",
+                        "Sistem Optik", "Keamanan Jaringan Telekomunikasi", "Protokol Komunikasi"
+                    ],
+                    required_skills: [
+                        "Pemahaman Jaringan", "Analitis", "Problem Solving",
+                        "Fisika dan Matematika", "Detail-Oriented", "Kemampuan Riset"
+                    ],
+                    study_duration: "4 Tahun (D4/S1)"
+                },
+                "Teknik_Elektro_Industri": {
+                    title: "Teknik Elektro Industri",
+                    description: "Jurusan ini mengaplikasikan prinsip-prinsip Teknik Elektro dalam konteks industri, mencakup otomasi, sistem kontrol, instrumentasi, dan sistem daya untuk proses manufaktur dan produksi.",
+                    careers: [
+                        "Industrial Automation Engineer", "PLC Programmer", "SCADA Specialist",
+                        "Control Systems Integrator", "Maintenance Engineer (Electrical)",
+                        "Process Control Engineer", "Robotics Engineer (Industrial)"
+                    ],
+                    core_subjects: [
+                        "Kendali Industri", "Sistem Otomasi", "Mesin Listrik Industri",
+                        "Instrumentasi Proses", "PLC (Programmable Logic Controller)",
+                        "Robotika Industri", "Sistem Daya Industri", "Kualitas Daya Listrik"
+                    ],
+                    required_skills: [
+                        "Logika Sistem", "Kemampuan Troubleshooting", "Detail-Oriented",
+                        "Pemahaman Proses Industri", "Keselamatan Kerja", "Ketelitian"
+                    ],
+                    study_duration: "4 Tahun (D4/S1)"
+                },
+                "Teknik_Mekatronika": {
+                    title: "Teknik Mekatronika",
+                    description: "Teknik Mekatronika adalah bidang interdisipliner yang menggabungkan ilmu mekanik, elektronik, komputer, dan kontrol untuk merancang, membuat, dan mengoperasikan sistem otomatis dan robot cerdas.",
+                    careers: [
+                        "Mechatronics Engineer", "Robotics Engineer", "Automation Engineer",
+                        "Control System Developer", "Smart Systems Designer",
+                        "Product Development Engineer", "Manufacturing Engineer"
+                    ],
+                    core_subjects: [
+                        "Robotika", "Sistem Kontrol", "Elektronika Daya",
+                        "Mekanika Teknik", "Pemrograman Mikrokontroler",
+                        "Aktuator dan Sensor", "Desain Sistem Mekatronika", "Manufaktur Terotomasi"
+                    ],
+                    required_skills: [
+                        "Multidisiplin", "Problem Solving", "Kreativitas",
+                        "Kemampuan Integrasi Sistem", "Inovatif", "Desain Mekanik & Elektronik"
+                    ],
+                    study_duration: "4 Tahun (D4/S1)"
+                },
+                "Teknik_Pembangkitan_Energi": {
+                    title: "Teknik Pembangkitan Energi",
+                    description: "Jurusan ini berfokus pada pengembangan, pengelolaan, dan optimalisasi sistem pembangkit energi, baik dari sumber konvensional (misal: termal) maupun terbarukan (surya, angin, hidro).",
+                    careers: [
+                        "Power Generation Engineer", "Renewable Energy Specialist", "Energy Systems Analyst",
+                        "Power Plant Operations Engineer", "Energy Efficiency Consultant",
+                        "Sustainable Energy Developer", "Grid Integration Engineer"
+                    ],
+                    core_subjects: [
+                        "Termodinamika", "Konversi Energi", "Pembangkit Tenaga Listrik (PLN)",
+                        "Energi Terbarukan (Surya, Angin, Hidro)", "Efisiensi Energi",
+                        "Manajemen Energi", "Sistem Kelistrikan", "Lingkungan dan Energi"
+                    ],
+                    required_skills: [
+                        "Fisika dan Matematika", "Analitis", "Kesadaran Lingkungan",
+                        "Inovatif", "Problem Solving", "Pemahaman Kebijakan Energi"
+                    ],
+                    study_duration: "4 Tahun (D4/S1)"
+                },
+                "Teknologi_Game": {
+                    title: "Teknologi Game",
+                    description: "Teknologi Game mengkhususkan diri pada pengembangan game secara menyeluruh, termasuk pemrograman game, desain level, grafis, animasi, dan aspek audio untuk berbagai platform gaming.",
+                    careers: [
+                        "Game Developer", "Game Designer", "Game Programmer",
+                        "Level Designer", "Graphics Programmer", "Game Quality Assurance Tester",
+                        "Technical Artist", "VR/AR Developer"
+                    ],
+                    core_subjects: [
+                        "Game Programming", "Game Design Principles", "Computer Graphics",
+                        "Artificial Intelligence for Games", "Audio for Games",
+                        "Game Engine Architecture", "Pemrograman Fisika Game", "Monetisasi Game"
+                    ],
+                    required_skills: [
+                        "Kreativitas", "Pemrograman (C#, C++)", "Logika",
+                        "Kerja Tim", "Passion terhadap Game", "Kemampuan Visualisasi"
+                    ],
+                    study_duration: "4 Tahun (D4/S1)"
+                },
+                "Teknologi_Rekayasa_Internet": {
+                    title: "Teknologi Rekayasa Internet",
+                    description: "Jurusan ini fokus pada infrastruktur, protokol, keamanan, dan aplikasi yang mendukung internet dan jaringan komputer. Ini adalah tulang punggung bagi komunikasi dan informasi di era digital.",
+                    careers: [
+                        "Network Engineer", "Cloud Engineer", "DevOps Engineer",
+                        "Cybersecurity Analyst", "Web Infrastructure Developer",
+                        "IT Administrator", "Wireless Network Specialist"
+                    ],
+                    core_subjects: [
+                        "Jaringan Komputer", "Keamanan Siber", "Protokol Internet",
+                        "Cloud Computing", "Sistem Terdistribusi",
+                        "Administrasi Jaringan", "Pemrograman Jaringan", "Virtualisasi"
+                    ],
+                    required_skills: [
+                        "Pemahaman Jaringan", "Analitis", "Problem Solving",
+                        "Cepat Belajar", "Detail-Oriented", "Pemahaman Keamanan Data"
+                    ],
+                    study_duration: "4 Tahun (D4/S1)"
+                },
+                "Sains_Data_Terapan": {
+                    title: "Sains Data Terapan",
+                    description: "Sains Data Terapan berfokus pada pengumpulan, pengolahan, analisis, dan interpretasi data untuk mendukung pengambilan keputusan yang lebih baik di berbagai industri, menggunakan statistik dan machine learning.",
+                    careers: [
+                        "Data Scientist", "Data Analyst", "Machine Learning Engineer",
+                        "Business Intelligence Developer", "Big Data Specialist",
+                        "Statistician", "Financial Data Analyst"
+                    ],
+                    core_subjects: [
+                        "Statistika dan Probabilitas", "Machine Learning", "Big Data Technologies",
+                        "Visualisasi Data", "Pemrograman (Python/R)",
+                        "Basis Data Lanjut", "Data Mining", "Matematika untuk Sains Data"
+                    ],
+                    required_skills: [
+                        "Matematika dan Statistik", "Logika", "Pemrograman",
+                        "Kemampuan Analitis", "Komunikasi Data", "Kreativitas"
+                    ],
+                    study_duration: "4 Tahun (D4/S1)"
+                }
+            };
+
+            function getMajorNameFromUrl() {
+                const urlParams = new URLSearchParams(window.location.search);
+                return urlParams.get('major'); // Gets the value of 'major' parameter
+            }
+
+            function populateMajorDetails() {
+                const majorKey = getMajorNameFromUrl(); // e.g., "Teknik_Informatika"
+
+                if (!majorKey || !majorsData[majorKey]) {
+                    // Handle case where major data is not found (e.g., show error message)
+                    document.getElementById('majorTitle').textContent = "Jurusan Tidak Ditemukan";
+                    document.getElementById('majorDescription').textContent = "Maaf, detail untuk jurusan ini tidak tersedia atau URL tidak valid.";
+                    // Clear or hide other sections
+                    document.getElementById('majorCareers').innerHTML = '';
+                    document.getElementById('majorCoreSubjects').innerHTML = '';
+                    document.getElementById('majorRequiredSkills').innerHTML = '';
+                    document.getElementById('majorStudyDuration').textContent = '';
+                    return;
+                }
+
+                const major = majorsData[majorKey];
+
+                document.getElementById('majorTitle').textContent = major.title;
+                document.getElementById('majorDescription').textContent = major.description;
+                document.getElementById('majorStudyDuration').textContent = major.study_duration;
+
+                // Populate career prospects
+                const careersList = document.getElementById('majorCareers');
+                careersList.innerHTML = ''; // Clear previous content
+                major.careers.forEach(career => {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = career;
+                    careersList.appendChild(listItem);
+                });
+
+                // Populate core subjects
+                const coreSubjectsList = document.getElementById('majorCoreSubjects');
+                coreSubjectsList.innerHTML = ''; // Clear previous content
+                major.core_subjects.forEach(subject => {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = subject;
+                    coreSubjectsList.appendChild(listItem);
+                });
+
+                // Populate required skills
+                const requiredSkillsList = document.getElementById('majorRequiredSkills');
+                requiredSkillsList.innerHTML = ''; // Clear previous content
+                major.required_skills.forEach(skill => {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = skill;
+                    requiredSkillsList.appendChild(listItem);
+                });
+            }
+
+            populateMajorDetails(); // Call function on page load
+        });
+    </script>
+</body>
+</html>

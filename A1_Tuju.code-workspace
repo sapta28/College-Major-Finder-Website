@@ -1,0 +1,12 @@
+{
+	"folders": [
+		{
+			"name": "A1_Tuju",
+			"path": "."
+		}
+	],
+	"settings": {
+		"liveServer.settings.port": 5501,
+		"liveServer.settings.multiRootWorkspaceName": "A1_Tuju"
+	}
+}

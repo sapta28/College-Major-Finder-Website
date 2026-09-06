@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Berita Terkini Jurusan</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #e9ecef;
+            font-family: Arial, sans-serif;
+            overflow-x: hidden;
+        }
+        
+        /* Sidebar styling */
+        .sidebar {
+            background-color: #fff;
+            height: 100vh;
+            width: 30vh;
+            transition: all 0.3s ease;
+            position: fixed;
+            left: 0;
+            top: 0;
+            z-index: 100;
+            padding-top: 20px;
+            overflow-y: auto;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        
+        .sidebar.collapsed {
+            transform: translateX(-180px);
+        }
+        
+        .list-group-item {
+            border-radius: 10px !important;
+            margin-bottom: 10px;
+            border: none;
+            background-color: #e9ecef;
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .list-group-item:hover {
+            background-color: #ff5722;
+            color: white;
+            transform: translateX(5px);
+        }
+        
+        .list-group-item i {
+            margin-right: 15px;
+            font-size: 1.2em;
+        }
+        
+        /* Keeping the original toggle button positioning */
+        .toggle-btn {
+            position: fixed;
+            left: 178px;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: #ff5722;
+            color: white;
+            border: none;
+            width: 25px;
+            height: 40px;
+            border-radius: 0 5px 5px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 101;
+            transition: all 0.3s ease;
+        }
+        
+        .sidebar.collapsed + .toggle-btn {
+            left: 0;
+        }
+        
+        /* Main content area */
+        .main-content {
+            transition: all 0.3s ease;
+            margin-left: 250px;
+            padding: 0 15px;
+            width: calc(100% - 250px);
+        }
+        
+        .main-content.expanded {
+            margin-left: 70px;
+            width: calc(100% - 70px);
+        }
+        
+        /* Original Header section */
+        .header {
+            background-color: #FF7F24;
+            padding: 20px;
+            border-radius: 5px;
+            color: white;
+            text-align: center;
+            margin-bottom: 20px;
+            margin-top: 20px;
+        }
+        
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        
+        .header p {
+            font-size: 14px;
+            margin-bottom: 0;
+        }
+        
+        /* Search bar (commented out in original, so keeping its styles but not rendering it) */
+        .search-container {
+            margin: 20px 0;
+            position: relative;
+        }
+        
+        .search-input {
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            padding: 8px 15px;
+            width: 100%;
+        }
+        
+        .search-button {
+            background-color: #ff5722;
+            border: none;
+            color: white;
+            border-radius: 5px;
+            padding: 5px 10px;
+            position: absolute;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        /* Content container for news items */
+        .content-container {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            overflow: hidden;
+            margin-bottom: 20px;
+            padding: 20px;
+        }
+        
+        /* Featured banner (Not present in image but was in the original dashboard code) */
+        .featured-banner {
+            width: 100%;
+            position: relative;
+        }
+        
+        .featured-banner img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        /* News item styling */
+        .news-item {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .news-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        
+        .news-item-image {
+            width: 100%;
+            max-height: 300px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        
+        .news-item-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .news-item-description {
+            font-size: 1rem;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .detail-btn {
+            background-color: #ff5722;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            float: right;
+        }
+        
+        .detail-btn:hover {
+            background-color: #e64a19;
+            transform: scale(1.05);
+            color: white;
+        }
+
+        /* Clearfix for float */
+        .news-item::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        /* Responsive Media Queries */
+        @media (max-width: 992px) {
+            .sidebar {
+                width: 220px;
+            }
+            .main-content {
+                margin-left: 220px;
+                width: calc(100% - 220px);
+            }
+            .main-content.expanded {
+                margin-left: 40px;
+                width: calc(100% - 40px);
+            }
+            .toggle-btn {
+                left: 218px;
+            }
+            .sidebar.collapsed + .toggle-btn {
+                left: 0;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 200px;
+            }
+            .main-content {
+                margin-left: 200px;
+                width: calc(100% - 200px);
+                padding: 0 10px;
+            }
+            .main-content.expanded {
+                margin-left: 20px;
+                width: calc(100% - 20px);
+            }
+            .toggle-btn {
+                left: 198px;
+            }
+             .header h1 {
+                font-size: 20px;
+            }
+            .news-item-title {
+                font-size: 1.2rem;
+            }
+            .news-item-description {
+                font-size: 0.95rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                transform: translateX(0) !important;
+                box-shadow: none;
+                padding-bottom: 10px;
+            }
+            .sidebar .list-group {
+                flex-direction: row;
+                justify-content: space-around;
+                flex-wrap: wrap;
+                padding: 0 10px;
+            }
+            .sidebar .list-group-item {
+                flex: 1 1 auto;
+                text-align: center;
+                padding: 8px 10px;
+                font-size: 0.85em;
+                margin: 5px;
+            }
+            .sidebar .list-group-item i {
+                margin-right: 5px;
+                font-size: 1em;
+            }
+
+            .toggle-btn {
+                display: none;
+            }
+            .main-content {
+                margin-left: 0;
+                width: 100%;
+                padding: 0 15px;
+            }
+            .main-content.expanded {
+                margin-left: 0;
+                width: 100%;
+            }
+            .header {
+                padding: 15px 10px;
+            }
+            .header h1 {
+                font-size: 18px;
+            }
+            .news-item-image {
+                max-height: 200px;
+            }
+            .news-item-title {
+                font-size: 1.1rem;
+            }
+            .news-item-description {
+                font-size: 0.9rem;
+            }
+            .detail-btn {
+                width: 100%;
+                text-align: center;
+                float: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar" id="sidebar">
+        <div class="list-group mx-2">
+            <a href="dasboard.html" class="list-group-item list-group-item-action">
+                <i class="fas fa-th-large"></i>
+                Dashboard
+            </a>
+            <a href="infoJurusan.html" class="list-group-item list-group-item-action">
+                <i class="fas fa-book"></i>
+                Jurusan
+            </a>
+            <a href="recent.html" class="list-group-item list-group-item-action active" style="background-color: #ff5722; color: white;">
+                <i class="fas fa-history"></i>
+                Berita Terbaru
+            </a>
+        </div>
+    </div>
+
+    <button class="toggle-btn" id="toggleBtn">
+        <i class="fas fa-chevron-left" id="toggleIcon"></i>
+    </button>
+    
+    <div class="main-content" id="mainContent">
+        <div class="header">
+            <h1>Berita Terkini Jurusan Kami</h1>
+            <p>Ikuti perkembangan terbaru seputar kegiatan dan prestasi jurusan kami.</p>
+        </div>
+        
+        <div class="content-container" id="newsContentContainer"> 
+            <p id="loadingMessage">Memuat berita...</p>
+        </div>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Sidebar toggle logic
+            const sidebar = document.getElementById('sidebar');
+            const toggleBtn = document.getElementById('toggleBtn');
+            const toggleIcon = document.getElementById('toggleIcon');
+            const mainContent = document.getElementById('mainContent');
+            
+            toggleBtn.addEventListener('click', function() {
+                sidebar.classList.toggle('collapsed');
+                mainContent.classList.toggle('expanded');
+                
+                if (sidebar.classList.contains('collapsed')) {
+                    toggleIcon.classList.remove('fa-chevron-left');
+                    toggleIcon.classList.add('fa-chevron-right');
+                } else {
+                    toggleIcon.classList.remove('fa-chevron-right');
+                    toggleIcon.classList.add('fa-chevron-left');
+                }
+            });
+
+            function adjustLayout() {
+                if (window.innerWidth <= 576) {
+                    sidebar.classList.remove('collapsed');
+                    mainContent.classList.remove('expanded');
+                    mainContent.style.marginLeft = '0';
+                    mainContent.style.width = '100%';
+                    toggleBtn.style.display = 'none';
+                } else {
+                    sidebar.classList.remove('collapsed');
+                    mainContent.classList.remove('expanded');
+                    mainContent.style.marginLeft = '250px';
+                    mainContent.style.width = 'calc(100% - 250px)';
+                    toggleBtn.style.display = 'flex';
+                    toggleIcon.classList.remove('fa-chevron-right');
+                    toggleIcon.classList.add('fa-chevron-left');
+                }
+            }
+            adjustLayout();
+            window.addEventListener('resize', adjustLayout);
+
+
+            // --- NEW JAVASCRIPT FOR DYNAMIC NEWS LOADING FROM JSON ---
+            const newsContentContainer = document.getElementById('newsContentContainer');
+
+            // Function to load news from news.json
+            async function loadAndRenderNews() {
+                try {
+                    const response = await fetch('news.json'); // Fetch the JSON file
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    const newsData = await response.json();
+
+                    newsContentContainer.innerHTML = ''; // Clear loading message/previous content
+
+                    if (newsData.length === 0) {
+                        newsContentContainer.innerHTML = '<p>Tidak ada berita terbaru saat ini.</p>';
+                        return;
+                    }
+
+                    newsData.forEach(news => {
+                        const newsItemDiv = document.createElement('div');
+                        newsItemDiv.className = 'news-item';
+                        newsItemDiv.innerHTML = `
+                            <img src="${news.image}" alt="${news.title}" class="news-item-image" onerror="this.onerror=null;this.src='https://via.placeholder.com/600x300?text=No+Image';">
+                            <h3 class="news-item-title">${news.title}</h3>
+                            <p class="news-item-description">${news.description}</p>
+                            <div class="text-end mt-2">
+                                <a href="${news.link}" class="detail-btn">Lihat Detail</a>
+                            </div>
+                        `;
+                        newsContentContainer.appendChild(newsItemDiv);
+                    });
+
+                } catch (error) {
+                    console.error('Error fetching news.json:', error);
+                    newsContentContainer.innerHTML = '<p>Gagal memuat berita terbaru. Mohon coba lagi nanti.</p>';
+                }
+            }
+
+            // Call this function when the page loads
+            loadAndRenderNews();
+        });
+    </script>
+</body>
+</html>

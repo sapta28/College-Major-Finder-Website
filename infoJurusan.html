@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temu Jurusan - Info Jurusan</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: rgb(222, 222, 222);
+        }
+
+        .header {
+            background-color: #ff5722;
+            color: white; 
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .container-fluid {
+            padding: 20px;
+        }
+
+        .sidebar {
+            padding-right: 15px;
+            background-color: white;
+            border-radius: 5px;
+        }
+
+        .list-group-item {
+            border-radius: 10px !important;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            border: none;
+            background-color: #e9ecef;
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            transition: all 0.3s ease;
+        }
+
+        .list-group-item:hover {
+            background-color: #ff5722;
+            color: white;
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(255, 87, 34, 0.3);
+        }
+        
+        .list-group-item i {
+            margin-right: 15px;
+            font-size: 1.2em;
+        }
+
+        .search-section {
+            background-color: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+        }
+
+        .search-input-group {
+            display: flex;
+            align-items: center;
+            border: 1px solid #ced4da;
+            border-radius: 0.25rem;
+            overflow: hidden;
+        }
+
+        .search-input-group input {
+            border: none;
+            padding: 0.75rem 1rem;
+            flex-grow: 1;
+        }
+
+        .search-input-group input:focus {
+            outline: none;
+            box-shadow: none;
+        }
+
+        .search-input-group .btn {
+            background-color: #ff5722;
+            color: white;
+            border-radius: 0;
+            padding: 0.75rem 1rem;
+        }
+
+        .search-input-group .btn:hover {
+            background-color: #e37200;
+        }
+
+        .major-cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .major-card {
+            background-color: white;
+            border-radius: 15px;
+            overflow: hidden;
+            border: none;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .major-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        .major-card-body {
+            padding: 20px;
+            flex-grow: 1;
+            /* Added for button alignment */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* Pushes content and button apart */
+        }
+
+        .major-card-title {
+            font-size: 1.4em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .major-card-text {
+            font-size: 0.95em;
+            color: #666;
+            margin-bottom: 15px;
+            flex-grow: 1; /* Allows text to take up available space */
+        }
+
+        .major-card-link {
+            background-color: #ff5722;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 0.9em;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            align-self: flex-end; /* **CHANGED: Aligns button to the right within flex column** */
+        }
+
+        .major-card-link:hover {
+            background-color: #e37200;
+            color: white;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+    <div class="header">
+        <div class="logo">
+            <a href="index.html">
+                <img src="images/Logo.png" alt="Logo">
+            </a>
+            <h3 class="mb-0">Temu Jurusan</h3>
+        </div>
+        <i class="fas fa-moon" style="float: right;"></i>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2 sidebar">
+                <div class="list-group">
+                    <a href="dasboard.html" class="list-group-item list-group-item-action">
+                        <i class="fas fa-th-large"></i>
+                        Dashboard
+                    </a>
+                    <a href="infoJurusan.html" class="list-group-item list-group-item-action active" aria-current="true" style="background-color: #ff5722; color: white;">
+                        <i class="fas fa-book"></i>
+                        Jurusan
+                    </a>
+                    <a href="recent.html" class="list-group-item list-group-item-action">
+                        <i class="fas fa-history"></i>
+                        Berita Terbaru
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-10">
+                <div class="search-section">
+                    <h4>Pencarian Jurusan Fakultas Teknik</h4>
+                    <p>Temukan Jurusan Teknik Idamanmu</p>
+                    <div class="input-group search-input-group">
+                        <input type="text" class="form-control" placeholder="Cari Jurusan Teknik" id="searchInput">
+                        <button class="btn" type="button" id="searchButton"><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+
+                <div class="major-cards-container" id="majorCardsContainer">
+                    <div class="major-card" data-major-name="Teknik Informatika">
+                        <div class="major-card-body">
+                            <div>
+                                <h5 class="major-card-title">Teknik Informatika</h5>
+                                <p class="major-card-text">Mempelajari pengembangan software, algoritma, kecerdasan buatan, pemrograman, dan sistem informasi. Lulusan dapat berkarir sebagai developer, data scientist, atau system analyst.</p>
+                            </div>
+                            <a href="jurusan-detail.html?major=Teknik_Informatika" class="major-card-link">Lihat Detail</a>
+                        </div>
+                    </div>
+                    <div class="major-card" data-major-name="Teknik Komputer">
+                        <div class="major-card-body">
+                            <div>
+                                <h5 class="major-card-title">Teknik Komputer</h5>
+                                <p class="major-card-text">Fokus pada perancangan perangkat keras komputer, arsitektur sistem, jaringan, dan embedded system. Prospek kerja meliputi hardware engineer, network specialist dan IoT developer.</p>
+                            </div>
+                            <a href="jurusan-detail.html?major=Teknik_Komputer" class="major-card-link">Lihat Detail</a>
+                        </div>
+                    </div>
+                    <div class="major-card" data-major-name="Teknik Elektro">
+                        <div class="major-card-body">
+                            <div>
+                                <h5 class="major-card-title">Teknik Elektro</h5>
+                                <p class="major-card-text">Mengkaji sistem kelistrikan, elektronika, telekomunikasi, dan kontrol. Lulusan dapat bekerja di bidang pembangkit listrik, otomasi industri, dan pengembangan teknologi.</p>
+                            </div>
+                            <a href="jurusan-detail.html?major=Teknik_Elektro" class="major-card-link">Lihat Detail</a>
+                        </div>
+                    </div>
+                    <div class="major-card" data-major-name="Teknologi Multimedia Broadcasting">
+                        <div class="major-card-body">
+                            <div>
+                                <h5 class="major-card-title">Teknologi Multimedia Broadcasting</h5>
+                                <p class="major-card-text">Mempelajari desain grafis, animasi, produksi video, dan pengembangan game. Lulusan dapat berkarir sebagai desainer UI/UX, animator, dan game developer.</p>
+                            </div>
+                            <a href="jurusan-detail.html?major=Teknologi_Multimedia_Broadcasting" class="major-card-link">Lihat Detail</a>
+                        </div>
+                    </div>
+                    <div class="major-card" data-major-name="Teknik Telekomunikasi">
+                        <div class="major-card-body">
+                            <div>
+                                <h5 class="major-card-title">Teknik Telekomunikasi</h5>
+                                <p class="major-card-text">Teknik Telekomunikasi adalah disiplin ilmu yang berkaitan dengan transfer data dengan jaringan jaringan kabel maupun nirkabel.</p>
+                            </div>
+                            <a href="jurusan-detail.html?major=Teknik_Telekomunikasi" class="major-card-link">Lihat Detail</a>
+                        </div>
+                    </div>
+                    <div class="major-card" data-major-name="Teknik Elektro Industri">
+                        <div class="major-card-body">
+                            <div>
+                                <h5 class="major-card-title">Teknik Elektro Industri</h5>
+                                <p class="major-card-text">Jurusan Elektronika Industri adalah bidang teknik yang mempelajari tentang komponen listrik dan juga berbagai macam semikonduktor.</p>
+                            </div>
+                            <a href="jurusan-detail.html?major=Teknik_Elektro_Industri" class="major-card-link">Lihat Detail</a>
+                        </div>
+                    </div>
+                    <div class="major-card" data-major-name="Teknik Mekatronika">
+                        <div class="major-card-body">
+                            <div>
+                                <h5 class="major-card-title">Teknik Mekatronika</h5>
+                                <p class="major-card-text">Mempelajari gabungan teknik mesin, elektronika, dan informatika untuk merancang, membuat, dan mengoperasikan sistem otomatis.</p>
+                            </div>
+                            <a href="jurusan-detail.html?major=Teknik_Mekatronika" class="major-card-link">Lihat Detail</a>
+                        </div>
+                    </div>
+                    <div class="major-card" data-major-name="Teknik Pembangkitan Energi">
+                        <div class="major-card-body">
+                            <div>
+                                <h5 class="major-card-title">Teknik Pembangkitan Energi</h5>
+                                <p class="major-card-text">Fokus pada teknologi produksi energi dari berbagai sumber, termasuk terbarukan. Lulusan dapat bekerja di pembangkit listrik atau industri energi.</p>
+                            </div>
+                            <a href="jurusan-detail.html?major=Teknik_Pembangkitan_Energi" class="major-card-link">Lihat Detail</a>
+                        </div>
+                    </div>
+                    <div class="major-card" data-major-name="Teknologi Game">
+                        <div class="major-card-body">
+                            <div>
+                                <h5 class="major-card-title">Teknologi Game</h5>
+                                <p class="major-card-text">Mempelajari desain, pengembangan, dan produksi game. Lulusan dapat berkarir sebagai game developer, game designer, atau animator game.</p>
+                            </div>
+                            <a href="jurusan-detail.html?major=Teknologi_Game" class="major-card-link">Lihat Detail</a>
+                        </div>
+                    </div>
+                    <div class="major-card" data-major-name="Teknologi Rekayasa Internet">
+                        <div class="major-card-body">
+                            <div>
+                                <h5 class="major-card-title">Teknologi Rekayasa Internet</h5>
+                                <p class="major-card-text">Fokus pada pengembangan dan pengelolaan infrastruktur jaringan internet, termasuk keamanan siber dan aplikasi berbasis web.</p>
+                            </div>
+                            <a href="jurusan-detail.html?major=Teknologi_Rekayasa_Internet" class="major-card-link">Lihat Detail</a>
+                        </div>
+                    </div>
+                    <div class="major-card" data-major-name="Sains Data Terapan">
+                        <div class="major-card-body">
+                            <div>
+                                <h5 class="major-card-title">Sains Data Terapan</h5>
+                                <p class="major-card-text">Mempelajari analisis data, machine learning, dan statistik untuk mengambil keputusan berbasis data di berbagai industri.</p>
+                            </div>
+                            <a href="jurusan-detail.html?major=Sains_Data_Terapan" class="major-card-link">Lihat Detail</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('searchInput');
+            const searchButton = document.getElementById('searchButton');
+            const majorCardsContainer = document.getElementById('majorCardsContainer');
+            const majorCards = majorCardsContainer.querySelectorAll('.major-card');
+
+            function filterMajors() {
+                const searchTerm = searchInput.value.toLowerCase();
+                majorCards.forEach(card => {
+                    const majorName = card.dataset.majorName.toLowerCase();
+                    if (majorName.includes(searchTerm)) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            }
+
+            searchButton.addEventListener('click', filterMajors);
+            searchInput.addEventListener('keyup', function(event) {
+                if (event.key === 'Enter') {
+                    filterMajors();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

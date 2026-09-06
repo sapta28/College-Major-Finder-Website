@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temu Jurusan</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color:rgb(222, 222, 222);
+        }
+
+        .header {
+            background-color: #ff5722;
+            color: white; 
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+        }
+
+        .search-bar input {
+            border-radius: 20px;
+            margin-right: 5px;
+        }
+
+        .search-button {
+            background-color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 3px 8px;
+        }
+
+        .container-fluid {
+            padding: 20px;
+        }
+
+        .sidebar {
+            padding-right: 15px;
+            background-color: white;
+            border-radius: 5px;
+        }
+
+        .list-group-item {
+            border-radius: 10px !important;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            border: none;
+            background-color: #e9ecef;
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            transition: all 0.3s ease;
+        }
+
+        .list-group-item:hover {
+            background-color: #ff5722;
+            color: white;
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(255, 87, 34, 0.3);
+        }
+        
+        .list-group-item i {
+            margin-right: 15px;
+            font-size: 1.2em;
+        }
+
+        .card {
+            margin-bottom: 20px;
+            border-radius: 15px;
+            overflow: hidden;
+            border: none;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        .card-img-top {
+            height: 150px;
+            object-fit: cover;
+        }
+
+        /* Improved Slider Styles */
+        .slider-container {
+            position: relative;
+            margin-bottom: 20px;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .slider-wrapper {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            width: fit-content; 
+        }
+
+        .slider-card {
+            flex-shrink: 0;
+            width: calc(33.333% - 16px); 
+            margin-right: 16px;
+            border-radius: 0;
+            margin-bottom: 0;
+            box-shadow: none;
+            box-sizing: border-box;
+            background-color: white;
+        }
+        .slider-wrapper .slider-card:last-child {
+            margin-right: 0;
+        }
+
+
+        .slider-card .card-body {
+            padding: 15px;
+        }
+
+        .slider-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .slider-controls {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            transform: translateY(-50%);
+            z-index: 10;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 10px;
+        }
+        
+        .slider-control-btn {
+            background-color: rgba(255, 255, 255, 0.7);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        .slider-control-btn:hover {
+            background-color: #ff5722;
+            color: white;
+        }
+
+        @media (max-width: 992px) {
+            .slider-card {
+                width: calc(50% - 16px);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .slider-card {
+                width: calc(100% - 16px);
+            }
+        }
+
+        .features, .majors {
+            margin: 30px 0;
+            background-color: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        }
+
+        .features h4, .majors h4 {
+            margin-bottom: 20px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .feature-item {
+            text-align: center;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .feature-item:hover {
+            transform: scale(1.1);
+        }
+
+        .feature-icon {
+            background-color: #f0f0f0;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            transition: all 0.3s ease;
+        }
+
+        .feature-item:hover .feature-icon {
+            background-color: #ff5722;
+            color: white;
+            box-shadow: 0 5px 15px rgba(255, 87, 34, 0.3);
+        }
+
+        .feature-icon i {
+            font-size: 30px;
+            color: #666;
+            transition: all 0.3s ease;
+        }
+
+        .feature-item:hover .feature-icon i {
+            color: white;
+        }
+
+        .major-item {
+            text-align: center;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .major-item:hover {
+            transform: translateY(-10px);
+        }
+
+        .major-icon {
+            background-color: #f0f0f0;
+            width: 60px;
+            height: 60px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .major-item:hover .major-icon {
+            background-color: #ff5722;
+            box-shadow: 0 5px 15px rgba(255, 87, 34, 0.3);
+        }
+
+        .major-icon::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.3);
+            transition: all 0.4s ease;
+            z-index: 1;
+        }
+
+        .major-item:hover .major-icon::before {
+            left: 100%;
+        }
+
+        .major-icon i {
+            font-size: 24px;
+            color: #666;
+            transition: all 0.3s ease;
+            z-index: 2;
+        }
+
+        .major-item:hover .major-icon i {
+            color: white;
+            transform: rotate(360deg);
+        }
+
+        .major-item p {
+            margin-top: 8px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .major-link {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .major-link:hover {
+            color: inherit;
+        }
+
+        .fakultas-dropdown {
+            background-color: #f0f0f0;
+            border-radius: 20px;
+            padding: 5px 15px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .fakultas-dropdown:hover {
+            background-color: #ff5722;
+            color: white;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="header">
+        <div class="logo">
+            <a href="index.html">
+                <img src="images/Logo.png" alt="Logo">
+            </a>
+            <h3 class="mb-0">Temu Jurusan</h3>
+        </div>
+        <i class="fas fa-moon" style="float: right;"></i>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2 sidebar">
+                <div class="list-group">
+                    <a href="dasboard.html" class="list-group-item list-group-item-action active">
+                        <i class="fas fa-th-large"></i>
+                        Dashboard
+                    </a>
+                    <a href="infoJurusan.html" class="list-group-item list-group-item-action">
+                        <i class="fas fa-book"></i>
+                        Jurusan
+                    </a>
+                    <a href="recent.html" class="list-group-item list-group-item-action">
+                        <i class="fas fa-history"></i>
+                        Berita Terbaru
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-10">
+                <div class="slider-container">
+                    <div class="slider-wrapper" id="sliderWrapper">
+                        <p style="text-align: center; width: 100%; margin-top: 50px;">Memuat berita terbaru...</p>
+                    </div>
+                    <div class="slider-controls">
+                        <button id="prevBtn" class="slider-control-btn"><i class="fas fa-chevron-left"></i></button>
+                        <button id="nextBtn" class="slider-control-btn"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </div>
+                
+                <div class="features">
+                    <h4>Fitur Lainnya</h4>
+                    <div class="row">
+                        <div class="col">
+                            <div class="feature-item">
+                                <a href="quiz.html" style="text-decoration: none;">
+                                    <div class="feature-icon">
+                                        <i class="fas fa-brain"></i>
+                                    </div>
+                                </a>
+                                <p>Smart Major</p>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="feature-item">
+                                <a href="perbandingan.html" style="text-decoration: none;">
+                                    <div class="feature-icon">
+                                        <i class="fas fa-bolt"></i>
+                                    </div>
+                                </a>
+                                <p>VS Major</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="majors">
+                    <h4>
+                        Jurusan Kuliah
+                    </h4>
+                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+                        <div class="col">
+                            <a href="jurusan-detail.html?major=Teknik_Elektro" class="major-link">
+                                <div class="major-item">
+                                    <div class="major-icon"><i class="fas fa-bolt"></i></div>
+                                    <p>Teknik Elektro</p>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col">
+                            <a href="jurusan-detail.html?major=Teknik_Informatika" class="major-link">
+                                <div class="major-item">
+                                    <div class="major-icon"><i class="fas fa-code"></i></div>
+                                    <p>Teknik Informatika</p>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col">
+                            <a href="jurusan-detail.html?major=Teknik_Komputer" class="major-link">
+                                <div class="major-item">
+                                    <div class="major-icon"><i class="fas fa-desktop"></i></div>
+                                    <p>Teknik Komputer</p>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col">
+                            <a href="jurusan-detail.html?major=Teknologi_Multimedia_Broadcasting" class="major-link">
+                                <div class="major-item">
+                                    <div class="major-icon"><i class="fas fa-film"></i></div>
+                                    <p>Teknologi Multimedia Broadcasting</p>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col">
+                            <a href="jurusan-detail.html?major=Teknik_Telekomunikasi" class="major-link">
+                                <div class="major-item">
+                                    <div class="major-icon"><i class="fas fa-satellite-dish"></i></div>
+                                    <p>Teknik Telekomunikasi</p>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col">
+                            <a href="jurusan-detail.html?major=Teknik_Elektro_Industri" class="major-link">
+                                <div class="major-item">
+                                    <div class="major-icon"><i class="fas fa-industry"></i></div>
+                                    <p>Teknik Elektro Industri</p>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col">
+                            <a href="jurusan-detail.html?major=Teknik_Mekatronika" class="major-link">
+                                <div class="major-item">
+                                    <div class="major-icon"><i class="fas fa-robot"></i></div>
+                                    <p>Teknik Mekatronika</p>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col">
+                            <a href="jurusan-detail.html?major=Teknik_Pembangkitan_Energi" class="major-link">
+                                <div class="major-item">
+                                    <div class="major-icon"><i class="fas fa-solar-panel"></i></div>
+                                    <p>Teknik Pembangkitan Energi</p>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col">
+                            <a href="jurusan-detail.html?major=Teknologi_Game" class="major-link">
+                                <div class="major-item">
+                                    <div class="major-icon"><i class="fas fa-gamepad"></i></div>
+                                    <p>Teknologi Game</p>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col">
+                            <a href="jurusan-detail.html?major=Teknologi_Rekayasa_Internet" class="major-link">
+                                <div class="major-item">
+                                    <div class="major-icon"><i class="fas fa-network-wired"></i></div>
+                                    <p>Teknologi Rekayasa Internet</p>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col">
+                            <a href="jurusan-detail.html?major=Sains_Data_Terapan" class="major-link">
+                                <div class="major-item">
+                                    <div class="major-icon"><i class="fas fa-chart-bar"></i></div>
+                                    <p>Sains Data Terapan</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const sliderWrapper = document.getElementById('sliderWrapper');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            let cards = []; // Will be populated after news is loaded
+
+            // Function to load news from news.json
+            async function loadNewsFromJson() {
+                try {
+                    const response = await fetch('news.json'); // Fetch the JSON file
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    const newsData = await response.json();
+                    return newsData;
+                } catch (error) {
+                    console.error('Error fetching news.json:', error);
+                    // Fallback to initial dummy data if JSON fetch fails
+                    const initialNews = [
+                        { id: 'static1', title: "PENS Raih Juara Umum Kompetisi Informatika Nasional", description: "Berita ini adalah contoh fallback karena gagal memuat data dari news.json.", image: "https://via.placeholder.com/600x300?text=Fallback+News", link: "#" },
+                        { id: 'static2', title: "Contoh Berita Statis Lainnya", description: "Ini adalah berita kedua dari data statis.", image: "https://via.placeholder.com/600x300?text=Static+Content", link: "#" }
+                    ];
+                    return initialNews;
+                }
+            }
+
+            // Function to populate slider with news data
+            function populateSlider(newsData) {
+                sliderWrapper.innerHTML = ''; // Clear loading message/previous content
+                if (newsData.length === 0) {
+                    sliderWrapper.innerHTML = '<p style="text-align: center; width: 100%; margin-top: 50px;">Tidak ada berita terbaru saat ini.</p>';
+                    // Hide controls if no news or only a few that fit
+                    prevBtn.style.display = 'none';
+                    nextBtn.style.display = 'none';
+                    return;
+                }
+
+                newsData.forEach(news => {
+                    const sliderCard = document.createElement('div');
+                    sliderCard.className = 'card slider-card';
+
+                    const img = document.createElement('img');
+                    img.src = news.image || 'https://via.placeholder.com/400x200?text=No+Image';
+                    img.alt = news.title || 'News Image';
+                    img.style.width = '100%';
+                    img.style.height = '200px';
+                    img.style.objectFit = 'cover';
+                    img.className = 'mb-3';
+
+                    const cardBody = document.createElement('div');
+                    cardBody.className = 'card-body';
+
+                    const cardTitle = document.createElement('h5');
+                    cardTitle.className = 'card-title';
+                    const fullTitle = news.title || 'No Title';
+                    cardTitle.textContent = fullTitle.length > 80 ? fullTitle.substring(0, 77) + '...' : fullTitle;
+
+                    const readMoreLink = document.createElement('a');
+                    readMoreLink.href = news.link || '#';
+                    readMoreLink.textContent = 'Lihat Detail';
+                    readMoreLink.className = 'btn btn-sm btn-outline-primary mt-2';
+                    readMoreLink.style.backgroundColor = '#ff5722';
+                    readMoreLink.style.borderColor = '#ff5722';
+                    readMoreLink.style.color = 'white';
+                    readMoreLink.onmouseover = function() { this.style.backgroundColor = '#e37200'; };
+                    readMoreLink.onmouseout = function() { this.style.backgroundColor = '#ff5722'; };
+
+                    cardBody.appendChild(cardTitle);
+                    cardBody.appendChild(readMoreLink);
+
+                    sliderCard.appendChild(img);
+                    sliderCard.appendChild(cardBody);
+                    sliderWrapper.appendChild(sliderCard);
+                });
+
+                cards = sliderWrapper.querySelectorAll('.slider-card'); // Update cards NodeList
+                initializeSlider(); // Initialize the slider after content is loaded
+            }
+
+            // Slider Initialization Function (same as before)
+            function initializeSlider() {
+                if(!sliderWrapper || cards.length === 0) {
+                    prevBtn.style.display = 'none';
+                    nextBtn.style.display = 'none';
+                    return;
+                }
+                
+                let currentSlide = 0;
+
+                function getCardsPerSlide() {
+                    if(window.innerWidth < 768) { return 1; } 
+                    else if(window.innerWidth < 992) { return 2; } 
+                    else { return 3; }
+                }
+                
+                function updateSliderPosition() {
+                    const cardsPerSlide = getCardsPerSlide();
+                    const totalSlides = Math.ceil(cards.length / cardsPerSlide);
+                    
+                    if(currentSlide >= totalSlides) { currentSlide = totalSlides - 1; }
+                    if(currentSlide < 0) { currentSlide = 0; }
+
+                    const containerWidth = sliderWrapper.parentElement.offsetWidth;
+                    const cardMargin = 16; 
+                    const calculatedCardWidth = (containerWidth / cardsPerSlide) - (cardMargin * (cardsPerSlide - 1) / cardsPerSlide);
+                    
+                    cards.forEach(card => {
+                        card.style.flexBasis = `${calculatedCardWidth}px`;
+                        card.style.maxWidth = `${calculatedCardWidth}px`;
+                    });
+                    
+                    const translateX = currentSlide * (calculatedCardWidth + cardMargin);
+                    sliderWrapper.style.transform = `translateX(-${translateX}px)`;
+                    
+                    prevBtn.style.visibility = currentSlide === 0 ? 'hidden' : 'visible';
+                    nextBtn.style.visibility = currentSlide >= totalSlides - 1 ? 'hidden' : 'visible';
+
+                    if (cards.length <= cardsPerSlide) { 
+                         prevBtn.style.visibility = 'hidden';
+                         nextBtn.style.visibility = 'hidden';
+                    }
+                }
+                
+                function nextSlide() {
+                    const cardsPerSlide = getCardsPerSlide();
+                    const totalSlides = Math.ceil(cards.length / cardsPerSlide);
+                    if (currentSlide < totalSlides - 1) {
+                        currentSlide++;
+                        updateSliderPosition();
+                    }
+                }
+                
+                function prevSlide() {
+                    if (currentSlide > 0) {
+                        currentSlide--;
+                        updateSliderPosition();
+                    }
+                }
+                
+                prevBtn.removeEventListener('click', prevSlide);
+                nextBtn.removeEventListener('click', nextSlide);
+                
+                prevBtn.addEventListener('click', prevSlide);
+                nextBtn.addEventListener('click', nextSlide);
+                
+                if (sliderWrapper.dataset.autoSlideInterval) {
+                    clearInterval(parseInt(sliderWrapper.dataset.autoSlideInterval));
+                }
+
+                let autoSlideInterval = setInterval(function() {
+                    const cardsPerSlide = getCardsPerSlide();
+                    const totalSlides = Math.ceil(cards.length / cardsPerSlide);
+                    if (currentSlide < totalSlides - 1) {
+                        currentSlide++;
+                    } else {
+                        currentSlide = 0;
+                    }
+                    updateSliderPosition();
+                }, 5000);
+                sliderWrapper.dataset.autoSlideInterval = autoSlideInterval.toString();
+
+                [prevBtn, nextBtn].forEach(btn => {
+                    btn.addEventListener('mouseenter', () => {
+                        clearInterval(parseInt(sliderWrapper.dataset.autoSlideInterval));
+                    });
+                    
+                    btn.addEventListener('mouseleave', () => {
+                        sliderWrapper.dataset.autoSlideInterval = setInterval(function() {
+                            const cardsPerSlide = getCardsPerSlide();
+                            const totalSlides = Math.ceil(cards.length / cardsPerSlide);
+                            if (currentSlide < totalSlides - 1) {
+                                currentSlide++;
+                            } else {
+                                currentSlide = 0;
+                            }
+                            updateSliderPosition();
+                        }, 5000).toString();
+                    });
+                });
+                
+                updateSliderPosition();
+                window.removeEventListener('resize', updateSliderPosition);
+                window.addEventListener('resize', updateSliderPosition);
+            }
+
+            // Load news data from JSON and then populate slider
+            loadNewsFromJson().then(newsData => {
+                populateSlider(newsData);
+            });
+        });
+    </script>
+</body>
+</html>
